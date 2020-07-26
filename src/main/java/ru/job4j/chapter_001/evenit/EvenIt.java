@@ -15,17 +15,19 @@ public class EvenIt implements Iterator<Integer> {
     public static void main(String[] args) {
         int[] arr = new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
         EvenIt evenIt = new EvenIt(arr);
-        evenIt.isEven(arr);
-    }
-
-    public void isEven(int[] arr) {
-        EvenIt evenIt = new EvenIt(arr);
         while (evenIt.hasNext()) {
             int number = evenIt.next();
-            if (number % 2 == 0) {
+            if (evenIt.isEven(number)) {
                 System.out.println(number);
             }
         }
+    }
+
+    public boolean isEven(int number) {
+        if (number % 2 == 0) {
+            return true;
+        }
+        return false;
     }
 
     @Override
