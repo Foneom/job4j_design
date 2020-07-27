@@ -45,12 +45,8 @@ public class MatrixIt implements Iterator<Integer> {
 
     @Override
     public Integer next() {
-        if (position >= size) {
-            throw new NoSuchElementException();
-        }
        if(!hasNext()) {
-           position++;
-           column++;
+           throw new NoSuchElementException();
        }
         return data[row][column++];
     }
