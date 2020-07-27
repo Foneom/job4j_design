@@ -1,4 +1,4 @@
-package ru.job4j.chapter_001.it;
+package ru.job4j.chapter_001.iterator.what_is_iterator;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

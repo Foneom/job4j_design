@@ -1,9 +1,10 @@
-package ru.job4j.chapter_001.it;
+package ru.job4j.chapter_001.iterator;
 
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import org.junit.Test;
+import ru.job4j.chapter_001.iterator.what_is_iterator.BackwardArrayIt;
 
 import java.util.NoSuchElementException;
 

@@ -1,9 +1,7 @@
-package ru.job4j.chapter_001.evenit;
+package ru.job4j.chapter_001.iterator.even_numbers_iterator;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.w3c.dom.ls.LSOutput;
-import ru.job4j.chapter_001.it.ArrayIt;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

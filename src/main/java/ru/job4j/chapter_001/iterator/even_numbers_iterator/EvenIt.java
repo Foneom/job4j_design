@@ -1,4 +1,4 @@
-package ru.job4j.chapter_001.evenit;
+package ru.job4j.chapter_001.iterator.even_numbers_iterator;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

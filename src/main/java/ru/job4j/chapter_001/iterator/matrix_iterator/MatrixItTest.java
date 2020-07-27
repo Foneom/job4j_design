@@ -1,4 +1,4 @@
-package ru.job4j.chapter_001.matrixit;
+package ru.job4j.chapter_001.iterator.matrix_iterator;
 
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
