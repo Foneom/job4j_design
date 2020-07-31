@@ -1,33 +1,76 @@
 package ru.job4j.chapter_001.generic.simple_array;
 
 import java.util.Iterator;
+import java.util.Objects;
 
+/**
+ * Универсальный контейнер.
+ *
+ * @param <T> - тип объектов массива
+ */
 public class SimpleArray<T> implements Iterable<T> {
+    /**
+     * Массив объектов
+     */
+    private Object[] container;
+    /**
+     * Индекс первой свободной ячейки и фак4тический размер массива
+     */
+    private int index = 0;
 
-    Object[] objects;
-    int index = 0;
-
+    /**
+     * @param size - необходимый размер массива
+     */
     public SimpleArray(int size) {
-        this.objects = new Object[size];
+        this.container = new Object[size];
     }
 
+    /**
+     * Метод добавления элемента в свободную ячейку массива
+     *
+     * @param value
+     */
     public void add(T value) {
-        this.objects[index++] = value;
+        this.container[index++] = value;
     }
 
+    /**
+     * Метод вывода элемента по индексу
+     *
+     * @param position - позиция ячейки
+     * @return
+     */
     public T get(int position) {
-        return (T) this.objects[position];
+        Objects.checkIndex(position, index);
+        return (T) this.container[position];
     }
 
-    public void remove(int position) {
+    /**
+     * Метод удаления элемента массива по индексу
+     *
+     * @param position - индекс ячейки дшля удаления
+     * @return
+     */
+    public T remove(int position) {
+        Objects.checkIndex(position, index);
+        T value = (T) this.container[position];
         System.arraycopy(
-                this.objects, position + 1, this.objects,
-                position, this.index - position);
-        this.index--;
+                this.container, position + 1, this.container,
+                position, this.container.length - position - 1);
+        this.container[index] = null;
+        return value;
     }
+
+    /**
+     * Метод замены элемента массива на другой
+     *
+     * @param position - номер ячейки заменяемого элемента
+     * @param value    - новый элемент
+     */
 
     public void set(int position, T value) {
-        this.objects[position] = value;
+        Objects.checkIndex(position, index);
+        this.container[position] = value;
     }
 
     @Override
@@ -37,12 +80,12 @@ public class SimpleArray<T> implements Iterable<T> {
 
             @Override
             public boolean hasNext() {
-                return position < objects.length;
+                return position < index;
             }
 
             @Override
             public T next() {
-                return (T) objects[position++];
+                return (T) container[position++];
             }
         };
     }

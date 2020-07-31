@@ -6,7 +6,8 @@ import org.junit.Test;
 import java.util.Iterator;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 
 public class SimpleArrayTest {
     /**
@@ -19,6 +20,7 @@ public class SimpleArrayTest {
         String result = simpleArray.get(0);
         assertThat(result, is("Hello"));
     }
+
     /**
      * Тест метода удаления элемента массива
      */
@@ -26,10 +28,12 @@ public class SimpleArrayTest {
     public void whenRemove() {
         SimpleArray<String> simpleArray = new SimpleArray<>(4);
         simpleArray.add("Test");
-        simpleArray.remove(0);
-        String result = simpleArray.get(0);
+        simpleArray.add("Test1");
+        simpleArray.remove(1);
+        String result = simpleArray.get(1);
         assertNull(result);
     }
+
     /**
      * Тест метода замены элемента массива
      */
@@ -41,6 +45,7 @@ public class SimpleArrayTest {
         String result = simpleArray.get(0);
         assertThat(result, is("Test"));
     }
+
     /**
      * Тест работы итератора
      */
