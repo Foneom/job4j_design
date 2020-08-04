@@ -8,6 +8,7 @@ import ru.job4j.chapter_001.generic.store.model.Store;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Класс, реализующий интерфейс Store
@@ -36,26 +37,27 @@ public class MemStore<T extends Base> implements Store<T> {
     @Override
     public boolean replace(String id, T model) {
         int index = this.indexOf(id);
-        if (mem.get(index).getId().equals(id)) {
+        boolean rsl = index != -1;
+        if (rsl) {
             model.setId(id);
             mem.set(index, model);
-            return true;
         }
-        return false;
+        return rsl;
     }
 
+    /**
+     * Метод удаления объекта из хранилища
+     * @param id - id объекта
+     * @return
+     */
     @Override
     public boolean delete(String id) {
-        Iterator<T> iterator = this.mem.iterator();
-        boolean result = false;
-        while (iterator.hasNext()) {
-            if (iterator.next().getId().equals(id)) {
-                iterator.remove();
-                result = true;
-                break;
-            }
+        int index = indexOf(id);
+        boolean rsl = index != -1;
+        if (rsl) {
+            mem.remove(index);
         }
-        return result;
+        return rsl;
     }
 
     /**
@@ -65,15 +67,8 @@ public class MemStore<T extends Base> implements Store<T> {
      */
     @Override
     public T findById(String id) {
-        T rsl = null;
-        for (int index = 0; index < mem.size(); index++) {
-            T element = mem.get(index);
-            if (mem.get(index).getId().equals(id)) {
-                rsl = element;
-                break;
-            }
-        }
-        return rsl;
+        int index = indexOf(id);
+        return index != -1 ? mem.get(index) : null;
     }
 
     /**
