@@ -45,8 +45,19 @@ public class ForwardLinked<T> implements Iterable<T>{
         return target.value;
     }
 
+    /**
+     * Возвращает размер списка
+     * @return
+     */
     public int getSize() {
         return size;
+    }
+
+    public void deleteFirst() {
+        if (head.next == null && size == 0) {
+            throw new NoSuchElementException();
+        }
+            head = head.next;
     }
 
     @Override
