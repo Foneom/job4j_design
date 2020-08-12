@@ -1,43 +1,50 @@
 package ru.job4j.chapter_001.list;
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
-public class ForwardLinked<T> implements Iterable<T>{
+
+public class ForwardLinked<T> implements Iterable<T> {
     /**
      * Ссылка на первый элемент
      */
     private Node<T> head;
     /**
+     * Ссылка на последний элемент
+     */
+    private Node<T> last;
+    /**
      * Размер списка
      */
     private int size = 0;
-
     /**
      * Метод добавления элемента в список
+     *
      * @param value
      */
     public void add(T value) {
-        Node<T> node = new Node<T>(value, null);
-        if (head == null) {
+        Node node = new Node(value);
+        if (isEmpty()) {
             head = node;
-            size++;
-            return;
+        } else {
+            last.next = node;
+            node.prev = last;
         }
-        Node<T> tail = head;
-        while (tail.next != null) {
-            tail = tail.next;
-        }
-        tail.next = node;
+        last = node;
         size++;
     }
 
     /**
      * Вывод элемента списка по индексу
+     *
      * @param index - индекс элемента
      * @return - элемент
      */
     public T getByIndex(int index) {
+        Objects.checkIndex(index, size);
         Node<T> target = head;
         for (int i = 0; i < index; i++) {
             target = target.next;
@@ -47,6 +54,7 @@ public class ForwardLinked<T> implements Iterable<T>{
 
     /**
      * Возвращает размер списка
+     *
      * @return
      */
     public int getSize() {
@@ -57,49 +65,70 @@ public class ForwardLinked<T> implements Iterable<T>{
         if (head.next == null && size == 0) {
             throw new NoSuchElementException();
         }
-            head = head.next;
+        head = head.next;
+        size--;
     }
 
-    @Override
-    public Iterator<T> iterator() {
-        return new Iterator<T>() {
+    public boolean isEmpty() {
+        return size == 0;
+    }
 
-            Node<T> node = head;
+    public T deleteLast() throws NoSuchElementException {
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        }
+        Node node = last;
+        if (last.prev == null) {
+            head = null;
+        } else {
+            last.prev.next = null;
+        }
+        last = last.prev;
+        size--;
+        return (T) node.value;
+    }
 
             @Override
-            public boolean hasNext() {
-                return node != null;
-            }
+        public Iterator<T> iterator () {
+            return new Iterator<T>() {
 
-            @Override
-            public T next() {
-                if (!hasNext()) {
-                    throw new NoSuchElementException();
+                Node<T> node = head;
+
+                @Override
+                public boolean hasNext() {
+                    return node != null;
                 }
-                T value = node.value;
-                node = node.next;
-                return value;
-            }
-        };
-    }
-    private static class Node<T> {
-        /**
-         * Текущий элемент
-         */
-        T value;
-        /**
-         * Следующий элемент
-         */
-        Node<T> next;
 
-        /**
-         * Коснтруктор
-         * @param value
-         * @param next
-         */
-        public Node(T value, Node<T> next) {
-            this.value = value;
-            this.next = next;
+                @Override
+                public T next() {
+                    if (!hasNext()) {
+                        throw new NoSuchElementException();
+                    }
+                    T value = node.value;
+                    node = node.next;
+                    return value;
+                }
+            };
+        }
+        private static class Node<T> {
+            /**
+             * Текущий элемент
+             */
+            private T value;
+            /**
+             * Следующий элемент
+             */
+            private Node next;
+            /**
+             * Предыдущий элемент
+             */
+            private Node prev;
+
+            /**
+             * Коснтруктор
+             */
+            public Node(T value) {
+                this.value = value;
+            }
         }
     }
-}
