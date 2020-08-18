@@ -9,6 +9,26 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 public class ForwardLinkedTest {
+    @Test
+    public void whenAddThenIter() {
+        ForwardLinked<Integer> linked = new ForwardLinked<>();
+        linked.add(1);
+        linked.add(2);
+        Iterator<Integer> it = linked.iterator();
+        assertThat(it.next(), is(1));
+        assertThat(it.next(), is(2));
+    }
+
+    @Test
+    public void whenAddAndRevertThenIter() {
+        ForwardLinked<Integer> linked = new ForwardLinked<>();
+        linked.add(1);
+        linked.add(2);
+        linked.revert();
+        Iterator<Integer> it = linked.iterator();
+        assertThat(it.next(), is(2));
+        assertThat(it.next(), is(1));
+    }
 
     @Test
     public void whenAddAndGet() {
@@ -31,6 +51,7 @@ public class ForwardLinkedTest {
         assertThat(iterator.next(), is(4));
         assertThat(iterator.next(), is(7));
     }
+
     @Test
     public void whenDelete() {
         ForwardLinked<Integer> list = new ForwardLinked<>();
@@ -56,6 +77,7 @@ public class ForwardLinkedTest {
         ForwardLinked<Integer> linked = new ForwardLinked<>();
         linked.deleteFirst();
     }
+
     @Test
     public void whenDeleteLast() {
         ForwardLinked<Integer> list = new ForwardLinked<>();

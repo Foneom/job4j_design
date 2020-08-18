@@ -20,6 +20,7 @@ public class ForwardLinked<T> implements Iterable<T> {
      * Размер списка
      */
     private int size = 0;
+
     /**
      * Метод добавления элемента в список
      *
@@ -73,6 +74,25 @@ public class ForwardLinked<T> implements Iterable<T> {
         return size == 0;
     }
 
+    public void revert() {
+        Node<T> curr = head;
+        Node<T> pre = null;
+        Node<T> incoming = null;
+
+        while (curr != null) {
+            incoming = curr.next;   // store incoming item
+
+            curr.next = pre;        // swap nodes
+            pre = curr;             // increment also pre
+
+            curr = incoming;        // increment current
+        }
+
+        head = pre; // pre is the latest item where
+        // curr is null
+    }
+
+
     public T deleteLast() throws NoSuchElementException {
         if (isEmpty()) {
             throw new NoSuchElementException();
@@ -88,47 +108,48 @@ public class ForwardLinked<T> implements Iterable<T> {
         return (T) node.value;
     }
 
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+
+            Node<T> node = head;
+
             @Override
-        public Iterator<T> iterator () {
-            return new Iterator<T>() {
-
-                Node<T> node = head;
-
-                @Override
-                public boolean hasNext() {
-                    return node != null;
-                }
-
-                @Override
-                public T next() {
-                    if (!hasNext()) {
-                        throw new NoSuchElementException();
-                    }
-                    T value = node.value;
-                    node = node.next;
-                    return value;
-                }
-            };
-        }
-        private static class Node<T> {
-            /**
-             * Текущий элемент
-             */
-            private T value;
-            /**
-             * Следующий элемент
-             */
-            private Node next;
-            /**
-             * Предыдущий элемент
-             */
-            private Node prev;
-
-            /**
-             * Коснтруктор
-             */
-            public Node(T value) {
-                this.value = value;
+            public boolean hasNext() {
+                return node != null;
             }
+
+            @Override
+            public T next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                T value = node.value;
+                node = node.next;
+                return value;
+            }
+        };
+    }
+
+    private static class Node<T> {
+        /**
+         * Текущий элемент
+         */
+        private T value;
+        /**
+         * Следующий элемент
+         */
+        private Node next;
+        /**
+         * Предыдущий элемент
+         */
+        private Node prev;
+
+        /**
+         * Коснтруктор
+         */
+        public Node(T value) {
+            this.value = value;
         }
     }
+}
