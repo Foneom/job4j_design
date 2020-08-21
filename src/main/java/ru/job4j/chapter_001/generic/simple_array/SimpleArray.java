@@ -14,11 +14,18 @@ public class SimpleArray<T> implements Iterable<T> {
      */
     private Object[] container;
     /**
-     * Индекс первой свободной ячейки и фак4тический размер массива
+     * Индекс первой свободной ячейки и фактический размер массива
      */
     private int index = 0;
 
     /**
+     * Конструктор по умолчанию
+     */
+    public SimpleArray() {
+    }
+
+    /**
+     * Конструктор
      * @param size - необходимый размер массива
      */
     public SimpleArray(int size) {
@@ -52,7 +59,6 @@ public class SimpleArray<T> implements Iterable<T> {
      * @return
      */
     public T remove(int position) {
-        Objects.checkIndex(position, index);
         T value = (T) this.container[position];
         System.arraycopy(
                 this.container, position + 1, this.container,
@@ -69,8 +75,23 @@ public class SimpleArray<T> implements Iterable<T> {
      */
 
     public void set(int position, T value) {
-        Objects.checkIndex(position, index);
         this.container[position] = value;
+    }
+
+    /**
+     * Метод сравнения элементов массива
+     * @param value
+     * @return true - массив садержит элемент
+     */
+    public boolean contains(T value) {
+        boolean flag = false;
+        for (Object o : container) {
+            if (o != null && o.equals(value)) {
+                flag = true;
+                break;
+            }
+        }
+        return flag;
     }
 
     @Override
