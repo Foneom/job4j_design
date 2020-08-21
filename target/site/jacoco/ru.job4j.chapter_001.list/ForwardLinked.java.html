@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ForwardLinked.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">job4j_design</a> &gt; <a href="index.source.html" class="el_package">ru.job4j.chapter_001.list</a> &gt; <span class="el_source">ForwardLinked.java</span></div><h1>ForwardLinked.java</h1><pre class="source lang-java linenums">package ru.job4j.chapter_001.list;
+
+import org.w3c.dom.ls.LSOutput;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Objects;
+
+
+<span class="fc" id="L10">public class ForwardLinked&lt;T&gt; implements Iterable&lt;T&gt; {</span>
+    /**
+     * Ссылка на первый элемент
+     */
+    private Node&lt;T&gt; head;
+    /**
+     * Ссылка на последний элемент
+     */
+    private Node&lt;T&gt; last;
+    /**
+     * Размер списка
+     */
+<span class="fc" id="L22">    private int size = 0;</span>
+    /**
+     * Метод добавления элемента в список
+     *
+     * @param value
+     */
+    public void add(T value) {
+<span class="fc" id="L29">        Node node = new Node(value);</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        if (isEmpty()) {</span>
+<span class="fc" id="L31">            head = node;</span>
+        } else {
+<span class="fc" id="L33">            last.next = node;</span>
+<span class="fc" id="L34">            node.prev = last;</span>
+        }
+<span class="fc" id="L36">        last = node;</span>
+<span class="fc" id="L37">        size++;</span>
+<span class="fc" id="L38">    }</span>
+
+    /**
+     * Вывод элемента списка по индексу
+     *
+     * @param index - индекс элемента
+     * @return - элемент
+     */
+    public T getByIndex(int index) {
+<span class="fc" id="L47">        Objects.checkIndex(index, size);</span>
+<span class="fc" id="L48">        Node&lt;T&gt; target = head;</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        for (int i = 0; i &lt; index; i++) {</span>
+<span class="fc" id="L50">            target = target.next;</span>
+        }
+<span class="fc" id="L52">        return target.value;</span>
+    }
+
+    /**
+     * Возвращает размер списка
+     *
+     * @return
+     */
+    public int getSize() {
+<span class="nc" id="L61">        return size;</span>
+    }
+
+    public void deleteFirst() {
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        if (size == 0) {</span>
+<span class="fc" id="L66">            throw new NoSuchElementException();</span>
+        }
+<span class="fc" id="L68">        head = head.next;</span>
+<span class="fc" id="L69">        size--;</span>
+<span class="fc" id="L70">    }</span>
+
+    public boolean isEmpty() {
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        return size == 0;</span>
+    }
+
+    public T deleteLast() throws NoSuchElementException {
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (isEmpty()) {</span>
+<span class="fc" id="L78">            throw new NoSuchElementException();</span>
+        }
+<span class="fc" id="L80">        Node node = last;</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        if (last.prev == null) {</span>
+<span class="fc" id="L82">            head = null;</span>
+        } else {
+<span class="fc" id="L84">            last.prev.next = null;</span>
+        }
+<span class="fc" id="L86">        last = last.prev;</span>
+<span class="fc" id="L87">        size--;</span>
+<span class="fc" id="L88">        return (T) node.value;</span>
+    }
+
+            @Override
+        public Iterator&lt;T&gt; iterator () {
+<span class="fc" id="L93">            return new Iterator&lt;T&gt;() {</span>
+
+<span class="fc" id="L95">                Node&lt;T&gt; node = head;</span>
+
+                @Override
+                public boolean hasNext() {
+<span class="fc bfc" id="L99" title="All 2 branches covered.">                    return node != null;</span>
+                }
+
+                @Override
+                public T next() {
+<span class="fc bfc" id="L104" title="All 2 branches covered.">                    if (!hasNext()) {</span>
+<span class="fc" id="L105">                        throw new NoSuchElementException();</span>
+                    }
+<span class="fc" id="L107">                    T value = node.value;</span>
+<span class="fc" id="L108">                    node = node.next;</span>
+<span class="fc" id="L109">                    return value;</span>
+                }
+            };
+        }
+        private static class Node&lt;T&gt; {
+            /**
+             * Текущий элемент
+             */
+            private T value;
+            /**
+             * Следующий элемент
+             */
+            private Node next;
+            /**
+             * Предыдущий элемент
+             */
+            private Node prev;
+
+            /**
+             * Коснтруктор
+             */
+<span class="fc" id="L130">            public Node(T value) {</span>
+<span class="fc" id="L131">                this.value = value;</span>
+<span class="fc" id="L132">            }</span>
+        }
+    }
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

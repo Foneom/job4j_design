@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EvenIt.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">job4j_design</a> &gt; <a href="index.source.html" class="el_package">ru.job4j.chapter_001.iterator.even_numbers_iterator</a> &gt; <span class="el_source">EvenIt.java</span></div><h1>EvenIt.java</h1><pre class="source lang-java linenums">package ru.job4j.chapter_001.iterator.even_numbers_iterator;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class EvenIt implements Iterator&lt;Integer&gt; {
+    private final int[] data;
+    private int index;
+
+<span class="nc" id="L10">    EvenIt(int[] data) {</span>
+<span class="nc" id="L11">        this.data = data;</span>
+<span class="nc" id="L12">    }</span>
+
+    @Override
+    public boolean hasNext() {
+<span class="nc bnc" id="L16" title="All 2 branches missed.">        return isEven() == 0;</span>
+    }
+
+    @Override
+    public Integer next() {
+<span class="nc bnc" id="L21" title="All 2 branches missed.">        if (!hasNext()) {</span>
+<span class="nc" id="L22">            throw new NoSuchElementException();</span>
+        }
+<span class="nc" id="L24">        return data[index++];</span>
+    }
+    /**
+     * Метод поиска индекса четных элементов массива
+     * @return
+     */
+    public Integer isEven() {
+<span class="nc" id="L31">        int number = -1;</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">        for (int i = index; i &lt; data.length; i++) {</span>
+<span class="nc bnc" id="L33" title="All 2 branches missed.">            if (data[i] % 2 == 0) {</span>
+<span class="nc" id="L34">                index = i;</span>
+<span class="nc" id="L35">                number++;</span>
+<span class="nc" id="L36">                break;</span>
+            }
+        }
+<span class="nc" id="L39">        return number;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

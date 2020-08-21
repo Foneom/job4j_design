@@ -20,13 +20,6 @@ public class DynamicArrayTest {
         array.add(3);
         assertThat(array.size(), is(3));
     }
-    @Test
-    public void whenAddThenIt() {
-        DynamicArray<String> array = new DynamicArray<>(10);
-        array.add("first");
-        String rsl = array.iterator().next();
-        assertThat(rsl, is("first"));
-    }
  @Test
  public void whenAddAndGet() {
  DynamicArray<String> array = new DynamicArray<>(2);

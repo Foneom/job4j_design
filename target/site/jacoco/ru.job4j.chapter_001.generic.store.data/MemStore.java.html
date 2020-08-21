@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MemStore.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">job4j_design</a> &gt; <a href="index.source.html" class="el_package">ru.job4j.chapter_001.generic.store.data</a> &gt; <span class="el_source">MemStore.java</span></div><h1>MemStore.java</h1><pre class="source lang-java linenums">package ru.job4j.chapter_001.generic.store.data;
+
+import ru.job4j.chapter_001.generic.simple_array.SimpleArray;
+import ru.job4j.chapter_001.generic.store.model.Base;
+import ru.job4j.chapter_001.generic.store.model.Role;
+import ru.job4j.chapter_001.generic.store.model.Store;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
+
+/**
+ * Класс, реализующий интерфейс Store
+ * @param &lt;T&gt;
+ */
+<span class="fc" id="L17">public class MemStore&lt;T extends Base&gt; implements Store&lt;T&gt; {</span>
+    /**
+     * Хранилище объектов
+     */
+<span class="fc" id="L21">    private final List&lt;T&gt; mem = new ArrayList&lt;&gt;();</span>
+    /**
+     * Метод добавления объекта в хранилище
+     * @param model - объект типа Base
+     */
+    @Override
+    public void add(T model) {
+<span class="fc" id="L28">        this.mem.add(model);</span>
+<span class="fc" id="L29">    }</span>
+
+    /**
+     * Метод замены объекта на новый
+     * @param id - id объекта
+     * @param model - новый объект
+     * @return
+     */
+    @Override
+    public boolean replace(String id, T model) {
+<span class="fc" id="L39">        int index = this.indexOf(id);</span>
+<span class="pc bpc" id="L40" title="1 of 2 branches missed.">        boolean rsl = index != -1;</span>
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">        if (rsl) {</span>
+<span class="fc" id="L42">            model.setId(id);</span>
+<span class="fc" id="L43">            mem.set(index, model);</span>
+        }
+<span class="fc" id="L45">        return rsl;</span>
+    }
+
+    /**
+     * Метод удаления объекта из хранилища
+     * @param id - id объекта
+     * @return
+     */
+    @Override
+    public boolean delete(String id) {
+<span class="fc" id="L55">        int index = indexOf(id);</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">        boolean rsl = index != -1;</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">        if (rsl) {</span>
+<span class="fc" id="L58">            mem.remove(index);</span>
+        }
+<span class="fc" id="L60">        return rsl;</span>
+    }
+
+    /**
+     * Метод поиска объукта в хранилище по id
+     * @param id
+     * @return объект или null
+     */
+    @Override
+    public T findById(String id) {
+<span class="fc" id="L70">        int index = indexOf(id);</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">        return index != -1 ? mem.get(index) : null;</span>
+    }
+
+    /**
+     * Вспомогательный метод
+     * @param id
+     * @return
+     */
+    private int indexOf(String id) {
+<span class="fc" id="L80">        int rsl = -1;</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">        for (int index = 0; index &lt; mem.size(); index++) {</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">            if (mem.get(index).getId().equals(id)) {</span>
+<span class="fc" id="L83">                rsl = index;</span>
+<span class="fc" id="L84">                break;</span>
+            }
+        }
+<span class="fc" id="L87">        return rsl;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

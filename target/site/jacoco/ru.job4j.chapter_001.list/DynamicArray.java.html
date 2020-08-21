@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DynamicArray.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">job4j_design</a> &gt; <a href="index.source.html" class="el_package">ru.job4j.chapter_001.list</a> &gt; <span class="el_source">DynamicArray.java</span></div><h1>DynamicArray.java</h1><pre class="source lang-java linenums">package ru.job4j.chapter_001.list;
+
+import java.util.*;
+
+
+public class DynamicArray&lt;T&gt; implements Iterable&lt;T&gt; {
+    /**
+     * Массив объектов
+     */
+    private Object[] container;
+    /**
+     * Индекс первой свободной ячейки и фактический размер массива
+     */
+<span class="fc" id="L14">    private int nElement = 0;</span>
+
+    /**
+     * @param size - необходимый размер массива
+     */
+<span class="fc" id="L19">    public DynamicArray(int size) {</span>
+<span class="fc" id="L20">        this.container = new Object[size];</span>
+<span class="fc" id="L21">    }</span>
+
+    /**
+     * Метод добавления элемента в свободную ячейку массива
+     *
+     * @param value
+     */
+    public void add(T value) {
+<span class="fc" id="L29">        checkSize(nElement + 1);</span>
+<span class="fc" id="L30">        this.container[nElement++] = value;</span>
+<span class="fc" id="L31">    }</span>
+
+    /**
+     * Метод вывода элемента по индексу
+     *
+     * @param position - позиция ячейки
+     * @return
+     */
+    public T get(int position) {
+<span class="fc" id="L40">        Objects.checkIndex(position, nElement);</span>
+<span class="fc" id="L41">        return (T) this.container[position];</span>
+    }
+
+    public void checkSize(int nextIndex) {
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (container.length - nextIndex &lt; 0) {</span>
+<span class="fc" id="L46">            int nextLength = container.length * 3;</span>
+<span class="fc" id="L47">            container = Arrays.copyOf(container, nextLength);</span>
+        }
+<span class="fc" id="L49">    }</span>
+
+    public int size() {
+<span class="fc" id="L52">        return this.nElement;</span>
+    }
+
+    @Override
+    public Iterator&lt;T&gt; iterator() {
+<span class="fc" id="L57">        return new Iterator&lt;T&gt;() {</span>
+<span class="fc" id="L58">            private int position = 0;</span>
+
+            @Override
+            public boolean hasNext() {
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">                return this.position &lt; nElement;</span>
+            }
+
+            @Override
+            public T next() {
+<span class="fc bfc" id="L67" title="All 2 branches covered.">                if (position != nElement) {</span>
+<span class="fc" id="L68">                    throw new ConcurrentModificationException();</span>
+                }
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">                if (!this.hasNext()) {</span>
+<span class="fc" id="L71">                    throw new NoSuchElementException();</span>
+                }
+
+<span class="nc" id="L74">                return (T) container[position++];</span>
+            }
+        };
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

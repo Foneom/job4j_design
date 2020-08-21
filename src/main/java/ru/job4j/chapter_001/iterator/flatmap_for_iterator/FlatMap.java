@@ -1,5 +1,6 @@
 package ru.job4j.chapter_001.iterator.flatmap_for_iterator;
 
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;

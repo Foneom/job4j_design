@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MatrixIt.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">job4j_design</a> &gt; <a href="index.source.html" class="el_package">ru.job4j.chapter_001.iterator.matrix_iterator</a> &gt; <span class="el_source">MatrixIt.java</span></div><h1>MatrixIt.java</h1><pre class="source lang-java linenums">package ru.job4j.chapter_001.iterator.matrix_iterator;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+/**
+ * @position - номер текущег элемента
+ * @size - количество элементов в матрице
+ * @row - строка
+ * @column - cтолбец
+ */
+public class MatrixIt implements Iterator&lt;Integer&gt; {
+    private final int[][] data;
+    private int position;
+    private int size;
+    private int row;
+    private int column;
+
+<span class="nc" id="L19">    public MatrixIt(int[][] data) {</span>
+<span class="nc" id="L20">        this.data = data;</span>
+<span class="nc" id="L21">        this.size = countElements(data);</span>
+<span class="nc" id="L22">    }</span>
+
+    /**
+     * Метод подсчета количества элемнтов в матрице
+     * @param data
+     * @return
+     */
+    private int countElements(int[][] data) {
+<span class="nc" id="L30">        int count = 0;</span>
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        for (int[] row : data) {</span>
+<span class="nc" id="L32">            count += row.length;</span>
+        }
+<span class="nc" id="L34">        return count;</span>
+    }
+
+    @Override
+    public boolean hasNext() {
+<span class="nc bnc" id="L39" title="All 4 branches missed.">        while (row &lt; data.length &amp;&amp; column &gt;= data[row].length) {</span>
+<span class="nc" id="L40">            column = 0;</span>
+<span class="nc" id="L41">            row++;</span>
+        }
+<span class="nc bnc" id="L43" title="All 2 branches missed.">        return position &lt; size;</span>
+    }
+
+    @Override
+    public Integer next() {
+<span class="nc bnc" id="L48" title="All 2 branches missed.">       if(!hasNext()) {</span>
+<span class="nc" id="L49">           throw new NoSuchElementException();</span>
+       }
+<span class="nc" id="L51">        return data[row][column++];</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
