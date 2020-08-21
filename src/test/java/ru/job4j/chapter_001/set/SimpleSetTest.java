@@ -8,7 +8,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 public class SimpleSetTest {
-
     @Test
     public void whenTrueHashSet() {
         SimpleSet<Integer> array = new SimpleSet<>(10);
