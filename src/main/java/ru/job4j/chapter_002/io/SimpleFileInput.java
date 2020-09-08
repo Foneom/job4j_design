@@ -9,7 +9,6 @@ public class SimpleFileInput {
     public static void main(String[] args) throws FileNotFoundException {
         FileInputStream fis = null;
         int b = 0;
-        ArrayList<Character> list = new ArrayList<>();
         try {
             fis = new FileInputStream("D:/test.txt");
             while ((b = fis.read()) != -1) {
@@ -23,3 +22,4 @@ public class SimpleFileInput {
         }
     }
 }
+
