@@ -18,6 +18,7 @@ public class MyHashMapTest {
         assertThat(store.get("Ivan"), is("Ivanych"));
         assertThat(store.delete("Makar"), is(false));
         assertThat(store.delete("Ivan"), is(true));
+
     }
 
     @Test
