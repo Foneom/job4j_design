@@ -12,6 +12,7 @@ public class Tree<E> implements SimpleTree<E> {
         this.root = new Node<>(root);
     }
 
+
     public boolean containsNode(Node<E> root, int value) {
         return containsNode(this.root, value);
     }

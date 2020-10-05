@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 public class TreeTest {
+
     @Test
     public void when6ElFindLastThen6() {
         Tree<Integer> tree = new Tree<>(1);
