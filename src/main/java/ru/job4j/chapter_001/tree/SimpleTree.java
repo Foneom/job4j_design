@@ -17,6 +17,7 @@ public interface SimpleTree<E> {
         public Node(E value) {
             this.value = value;
         }
+
         public void add(Node<E> child) {
             this.children.add(child);
         }
