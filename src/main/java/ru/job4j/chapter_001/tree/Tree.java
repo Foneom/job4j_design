@@ -22,30 +22,45 @@ public class Tree<E> implements SimpleTree<E> {
     @Override
     public boolean add(E parent, E child) {
         boolean rsl = false;
-        if (findBy(child).isEmpty()) {
-            root.add(new Node<>(child));
-            rsl = true;
-        } else if (findBy(parent).isPresent()) {
+        if (findBy(parent).isPresent()) {
             findBy(parent).get().add(new Node<>(child));
             rsl = true;
+        } else if (findBy(child).isEmpty()) {
+            root.add(new Node<>(child));
+            rsl = true;
         }
-        return rsl;
-    }
+            return rsl;
+        }
 
-
-    @Override
-    public Optional<Node<E>> findBy(E value) {
-        Optional<Node<E>> rsl = Optional.empty();
-        Queue<Node<E>> data = new LinkedList<>();
-        data.offer(this.root);
-        while (!data.isEmpty()) {
-            Node<E> el = data.poll();
-            if (el.value.equals(value)) {
-                rsl = Optional.of(el);
-                break;
+        @Override
+        public Optional<Node<E>> findBy (E value){
+            Optional<Node<E>> rsl = Optional.empty();
+            Queue<Node<E>> data = new LinkedList<>();
+            data.offer(this.root);
+            while (!data.isEmpty()) {
+                Node<E> el = data.poll();
+                if (el.value.equals(value)) {
+                    rsl = Optional.of(el);
+                    break;
+                }
+                data.addAll(el.children);
             }
-            data.addAll(el.children);
+            return rsl;
         }
-        return rsl;
+
+        public boolean isBinary() {
+        boolean result = true;
+            Queue<Node<E>> data = new LinkedList<>();
+            data.offer(this.root);
+            while (!data.isEmpty()) {
+                Node<E> el = data.poll();
+                if (el.children.size() <= 2) {
+                    data.addAll(el.children);
+                } else {
+                    result = false;
+                    break;
+                }
+            }
+            return result;
+        }
     }
-}
