@@ -1,8 +1,10 @@
 package ru.job4j.chapter_001.map;
 
 import org.junit.Test;
+
 import java.util.GregorianCalendar;
 import java.util.Iterator;
+
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
@@ -56,7 +58,6 @@ public class MyHashMapTest {
         assertThat(iterator.next().getValue(), is(3));
         assertThat(iterator.hasNext(), is(false));
     }
-
 
 
 }

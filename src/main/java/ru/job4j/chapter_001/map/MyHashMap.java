@@ -64,6 +64,7 @@ public class MyHashMap<K, V> implements Iterable<HashNode> {
     public Iterator<HashNode> iterator() {
         return new Iterator<>() {
             private int currentIndex = 0;
+
             @Override
             public boolean hasNext() {
                 return currentIndex < size
@@ -78,50 +79,50 @@ public class MyHashMap<K, V> implements Iterable<HashNode> {
     }
 }
 
-    class HashNode<K, V> {
-        private K key;
-        private V value;
+class HashNode<K, V> {
+    private K key;
+    private V value;
 
-        public HashNode(K key, V value) {
-            this.key = key;
-            this.value = value;
+    public HashNode(K key, V value) {
+        this.key = key;
+        this.value = value;
+    }
+
+    public K getKey() {
+        return key;
+    }
+
+    public V getValue() {
+        return value;
+    }
+
+    public void setValue(V value) {
+        this.value = value;
+    }
+
+    @Override
+    public int hashCode() {
+        int prime = 13;
+        int mul = 11;
+        if (key != null) {
+            int hashCode = prime * mul + key.hashCode();
+            return hashCode;
         }
+        return 0;
+    }
 
-        public K getKey() {
-            return key;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
         }
-
-        public V getValue() {
-            return value;
-        }
-
-        public void setValue(V value) {
-            this.value = value;
-        }
-
-        @Override
-        public int hashCode() {
-            int prime = 13;
-            int mul = 11;
-            if (key != null) {
-                int hashCode = prime * mul + key.hashCode();
-                return hashCode;
-            }
-            return 0;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) {
-                return true;
-            }
-            if (o == null || this.getClass().getName() != o.getClass().getName()) {
-                return false;
-            }
-            HashNode e = (HashNode) o;
-            if (this.key == e.key) {
-                return true;
-            }
+        if (o == null || this.getClass().getName() != o.getClass().getName()) {
             return false;
         }
+        HashNode e = (HashNode) o;
+        if (this.key == e.key) {
+            return true;
+        }
+        return false;
     }
+}
