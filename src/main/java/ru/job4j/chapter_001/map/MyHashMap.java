@@ -1,27 +1,113 @@
 package ru.job4j.chapter_001.map;
 
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.util.*;
 
 
-class MyHashMap<K, V> implements Iterable<MyHashMap.Node> {
+public class MyHashMap<K, V> implements Iterable<HashNode> {
+    private int size;
+    private final int DEFAULT_SIZE = 16;
+    private HashNode<K, V>[] values = new HashNode[DEFAULT_SIZE];
 
-    /**
-     *  Отдельный элемент.
-     */
-    protected static class Node<K, V> {
-        K key;
-        V value;
-        int hashCode;
 
-        /**
-         * Конструктор
-         */
-        Node(K key, V value) {
+    public boolean put(K key, V value) {
+        boolean isInsert = true;
+        for (int i = 0; i < size; i++) {
+            if (values[i].getKey().equals(key)) {
+                values[i].setValue(value);
+                isInsert = false;
+            }
+        }
+        if (isInsert) {
+            values[size] = new HashNode<>(key, value);
+            size++;
+        }
+        return isInsert;
+    }
+
+    public V get(K key) {
+        V result = null;
+        for (int i = 0; i < size; i++) {
+            if (values[i].getKey().equals(key)
+                    && values[i] != null) {
+                result = values[i].getValue();
+            }
+        }
+        return result;
+    }
+
+    public boolean delete(K key) {
+        boolean isDeleted = false;
+        int i;
+        for (i = 0; i < size; i++) {
+            if (values[i].getKey().equals(key)
+                    && values[i] != null) {
+                values[i] = null;
+                for (int j = i; j < size; j++) {
+                    values[i] = values[i + 1];
+                    size--;
+                    isDeleted = true;
+                }
+            }
+        }
+        return isDeleted;
+    }
+
+
+    private void newSize() {
+        if (size == values.length) {
+            int newSize = values.length * 2;
+            values = Arrays.copyOf(values, newSize);
+        }
+    }
+
+    @Override
+    public Iterator<HashNode> iterator() {
+        return new Iterator<>() {
+            private int currentIndex = 0;
+            @Override
+            public boolean hasNext() {
+                return currentIndex < size
+                        && values[currentIndex] != null;
+            }
+
+            @Override
+            public HashNode next() {
+                return values[currentIndex++];
+            }
+        };
+    }
+}
+
+    class HashNode<K, V> {
+        private K key;
+        private V value;
+
+        public HashNode(K key, V value) {
             this.key = key;
             this.value = value;
+        }
+
+        public K getKey() {
+            return key;
+        }
+
+        public V getValue() {
+            return value;
+        }
+
+        public void setValue(V value) {
+            this.value = value;
+        }
+
+        @Override
+        public int hashCode() {
+            int prime = 13;
+            int mul = 11;
+            if (key != null) {
+                int hashCode = prime * mul + key.hashCode();
+                return hashCode;
+            }
+            return 0;
         }
 
         @Override
@@ -29,151 +115,13 @@ class MyHashMap<K, V> implements Iterable<MyHashMap.Node> {
             if (this == o) {
                 return true;
             }
-            if (o == null || getClass() != o.getClass()) {
+            if (o == null || this.getClass().getName() != o.getClass().getName()) {
                 return false;
             }
-            Node<K, V> node = (Node<K, V>) o;
-            return Objects.equals(key, node.key)
-                    && Objects.equals(value, node.value);
-        }
-
-        @Override
-        public int hashCode() {
-            int result = 17;
-            result = 37 * result + this.key.hashCode();
-            return result;
-        }
-    }
-
-    /**
-     * Хранилище для элементов.
-     */
-    private Node[] store;
-
-    /**
-     * Стартовое количество бакетов.
-     */
-    private final static int START_CAPACITY = 8;
-
-    public MyHashMap() {
-        this.store = new Node[START_CAPACITY];
-    }
-
-    private static final double LOADFACTOR = 0.75;
-
-    /**
-     * Количество реальных элементов в хранилище.
-     */
-    private int amount = 0;
-
-    /**
-     * Счетчик количества изменений коллекции.
-     */
-    private int modCount = 0;
-
-    private int hash(K key) {
-        return (key.hashCode() & 0x7FFFFFFF) % this.store.length;
-    }
-
-    /**
-     * Метод поиска индекса
-     */
-    private int setIndex(K key) {
-        int preIndex = hash(key);
-        return preIndex % store.length;
-    }
-
-    /**
-     * Проверка наличия свободных бакетов
-     */
-    private void checkSize() {
-        if (amount > (this.store.length * LOADFACTOR)) {
-            int newSize = this.store.length << 1;
-            Node[] newStore = new Node[newSize];
-            for (Node node : this) {
-                newStore[setIndex((K) node.key)] = node;
+            HashNode e = (HashNode) o;
+            if (this.key == e.key) {
+                return true;
             }
-            this.store = newStore;
+            return false;
         }
     }
-
-    /**
-     * Возвращает количество реальных элементов в хранилище.
-     */
-    public int getAmount() {
-        return this.amount;
-    }
-
-    /**
-     * Метод для добавления новых элементов в коллекцию.
-     */
-    boolean insert(K key, V value) {
-        checkSize();
-        boolean result = false;
-        Node<K, V> newElement = new Node<>(key, value);
-        int index = setIndex(newElement.key);
-        if (this.store[index] == null) {
-            this.store[index] = newElement;
-            this.amount++;
-            this.modCount++;
-            result = true;
-        }
-        return result;
-    }
-
-    /**
-     * Метод получения значения элемента в коллекции по ключу.
-     */
-    V get(K key) {
-        int index = setIndex(key);
-        return (this.store[index] != null)
-                ? (V) this.store[index].value
-                : null;
-    }
-
-    /**
-     * Метод для удаления значения элемента в коллекции по ключу.
-     */
-    boolean delete(K key) {
-        boolean result = false;
-        int index = setIndex((K) key);
-        if (this.store[index] != null) {
-            this.store[index] = null;
-            this.amount--;
-            this.modCount++;
-            result = true;
-        }
-        return result;
-    }
-
-    @Override
-    public Iterator<Node> iterator() {
-        return new Iterator<Node>() {
-            int pointer = 0;
-            int innerModCount = modCount;
-            @Override
-            public boolean hasNext() {
-                boolean result = false;
-                if (innerModCount != modCount) {
-                    throw new ConcurrentModificationException();
-                }
-                for (int i = pointer; i < store.length; i++) {
-                    if (store[i] != null) {
-                        pointer = i;
-                        result = true;
-                        break;
-                    }
-                }
-                return result;
-            }
-
-            @Override
-            public Node next() {
-                if (!hasNext()) {
-                    throw new NoSuchElementException();
-                }
-                return store[pointer++];
-            }
-        };
-    }
-}
