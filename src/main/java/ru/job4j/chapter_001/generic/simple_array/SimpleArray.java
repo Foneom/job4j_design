@@ -86,7 +86,7 @@ public class SimpleArray<T> implements Iterable<T> {
     public boolean contains(T value) {
         boolean flag = false;
         for (Object o : container) {
-            if (o != null && o.equals(value)) {
+            if (!o.equals(null) && o.equals(value)) {
                 flag = true;
                 break;
             }
