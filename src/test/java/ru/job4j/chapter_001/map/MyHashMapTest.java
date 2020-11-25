@@ -5,6 +5,8 @@ import org.junit.Test;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
@@ -23,10 +25,9 @@ public class MyHashMapTest {
 
     @Test
     public void whenInsertUserObject() {
-        MyHashMap<User, Integer> store = new MyHashMap<>();
-        User user1 = new User("Prokop", 5, new GregorianCalendar(1982, 7, 18));
-        store.put(user1, 67);
-        assertThat(store.get(user1), is(67));
+        MyHashMap<String, Integer> store = new MyHashMap<>();
+        store.put("Papa", 67);
+        assertThat(store.get("Papa"), is(67));
     }
 
     @Test
@@ -44,19 +45,63 @@ public class MyHashMapTest {
     }
 
     @Test
-    public void iteratorTest() {
-        MyHashMap<String, Integer> map = new MyHashMap<>();
-        map.put("first", 1);
-        map.put("second", 2);
-        map.put("third", 3);
-        Iterator<HashNode> iterator = map.iterator();
-        assertThat(iterator.hasNext(), is(true));
-        assertThat(iterator.next().getValue(), is(1));
-        assertThat(iterator.hasNext(), is(true));
-        assertThat(iterator.next().getKey(), is("second"));
-        assertThat(iterator.hasNext(), is(true));
-        assertThat(iterator.next().getValue(), is(3));
-        assertThat(iterator.hasNext(), is(false));
+    public void whenInsertValueByKeyShouldGetByKeySameValue() {
+        MyHashMap<String, Integer> simpleMap = new MyHashMap<>();
+        simpleMap.put("ss", 5);
+        assertThat(simpleMap.get("ss"), is(5));
+    }
+
+
+    @Test
+    public void whenGetByKeyDoesNotExistShouldNull() {
+        MyHashMap<String, Integer> simpleMap = new MyHashMap<>();
+        assertNull(simpleMap.get("ss"));
+    }
+
+    @Test
+    public void whenAddMoreThan16ValuesShouldIncreaseSize() {
+        MyHashMap<Integer, Integer> simpleMap = new MyHashMap<>();
+        for (int i = 0; i < 16; i++) {
+            simpleMap.put(i, i);
+        }
+        assertTrue(simpleMap.put(25, 25));
+        assertThat(simpleMap.get(25), is(25));
+    }
+
+    @Test
+    public void whenDeleteValueShouldGetNullByKey() {
+        MyHashMap<String, Integer> simpleMap = new MyHashMap<>();
+        assertTrue(simpleMap.put("ss", 5));
+        assertThat(simpleMap.get("ss"), is(5));
+        assertTrue(simpleMap.delete("ss"));
+        assertNull(simpleMap.get("ss"));
+    }
+
+    @Test
+    public void whenDeleteValueNotPresentShouldFalse() {
+        MyHashMap<String, Integer> simpleMap = new MyHashMap<>();
+        assertFalse(simpleMap.delete("ss"));
+    }
+
+    @Test
+    public void whenInsertKeyNullShouldGetValueByKey() {
+        MyHashMap<Integer, Integer> simpleMap = new MyHashMap<>();
+        assertTrue(simpleMap.put(5, 5));
+        assertTrue(simpleMap.put(null, 7));
+        assertTrue(simpleMap.put(15, 15));
+        assertThat(simpleMap.get(null), is(7));
+    }
+    @Test
+    public void whenIterateThanTrue() {
+        MyHashMap<Integer, String> simpleMap = new MyHashMap<>();
+        simpleMap.put(12, "first");
+        simpleMap.put(16, "second");
+        Iterator itr = simpleMap.iterator();
+        assertThat(itr.hasNext(), is(true));
+        System.out.println(itr.next());
+        assertThat(itr.hasNext(), is(true));
+        System.out.println(itr.next());
+        assertThat(itr.hasNext(), is(false));
     }
 
 
