@@ -55,7 +55,7 @@ public class MyHashMap<K, V> implements Iterable<V> {
     public boolean put(K key, V value) {
         boolean insert = false;
         int index = (values.length - 1) & hash(key);
-        if (values[index] != null && values[index].getKey().equals(key)) {
+        if (values[index] != null && Objects.equals(values[index].getKey(), key)) {
             values[index].setValue(value);
         } else {
             values[index] = new Node<>(key, value);
@@ -67,81 +67,97 @@ public class MyHashMap<K, V> implements Iterable<V> {
         return insert;
     }
 
+
+
     /**
      * Метод увеличения количества бакетов при достижении предельной загрузки
      */
     private void resize() {
         if (size >= DEFAULT_LOAD_FACTOR * values.length) {
-            int newSize = values.length * 2;
-            values = Arrays.copyOf(values, newSize);
+            Node<K, V>[] oldTab = values;
+            values = (Node<K, V>[]) new Node[size];
+            for (Node<K, V> node : oldTab) {
+                if (node != null) {
+                    K key = node.key;
+                    V value = node.value;
+                    int index = (values.length - 1) & hash(key);
+                    values[index] = new Node<>(key, value);
+                }
+            }
         }
     }
 
-    /**
-     * Метод возвращает значение по ключу
-     *
-     * @param key
-     * @return
-     */
-    public V get(K key) {
-        V result = null;
-        int index = (values.length - 1) & hash(key);
-        Node<K, V> searched = values[index];
-        if (searched != null) {
-            result = searched.value;
+        /**
+         * Метод возвращает значение по ключу
+         *
+         * @param key
+         * @return
+         */
+        public V get (K key) {
+            V result = null;
+            int index = (values.length - 1) & hash(key);
+            Node<K, V> searched = values[index];
+            if (searched != null) {
+                if ((searched.key == null && key == null) || (searched.key != null && Objects.equals(searched.key, key))) {
+                    result = searched.value;
+                }
+            }
+            return result;
         }
-        return result;
-    }
 
-    /**
-     * Метод удаления данных из хранилища
-     *
-     * @param key
-     * @return
-     */
-    public boolean delete(K key) {
-        boolean delete = false;
-        int index = (values.length - 1) & hash(key);
-        Node<K, V> searched = values[index];
-        if (searched != null && searched.getKey().equals(key)) {
-            values[index] = null;
-            size--;
-            delete = true;
+        /**
+         * Метод удаления данных из хранилища
+         *
+         * @param key
+         * @return
+         */
+        public boolean delete (K key){
+            boolean delete = false;
+            int index = (values.length - 1) & hash(key);
+            Node<K, V> searched = values[index];
+            if (searched != null && Objects.equals(searched.getKey(), key)) {
+                values[index] = null;
+                size--;
+                delete = true;
+            }
+            return delete;
         }
-        return delete;
-    }
 
-    private class SimpleMapIterator implements Iterator<V> {
+        private class SimpleMapIterator implements Iterator<V> {
 
-        private int index = 0;
-        Node<K, V> node = null;
+            private int index = 0;
+            Node<K, V> node = null;
+            private final int expectedModCount = count;
+
+            @Override
+            public boolean hasNext() {
+                boolean hasNext = false;
+                if (index < values.length) {
+                    do {
+                        node = values[index++];
+                    } while (node == null && index < values.length);
+                    hasNext = (node != null);
+                    index--;
+                }
+                return hasNext;
+            }
+
+            @Override
+            public V next() {
+                if (expectedModCount != count) {
+                    throw new ConcurrentModificationException();
+                }
+                if (!hasNext()) {
+                    throw new NoSuchElementException("Simple map");
+                }
+                return values[index++].value;
+            }
+        }
 
         @Override
-        public boolean hasNext() {
-            boolean hasNext = false;
-            if (index < values.length) {
-                do {
-                    node = values[index++];
-                } while (node == null && index < values.length);
-                hasNext = (node != null);
-                index--;
-            }
-            return hasNext;
+        public Iterator<V> iterator () {
+            return new SimpleMapIterator();
         }
-
-        @Override
-        public V next() {
-            if (!hasNext()) {
-                throw new NoSuchElementException("Simple map");
-            }
-            return values[index++].value;
-        }
-    }
-
-    @Override
-    public Iterator<V> iterator() {
-        return new SimpleMapIterator();
-    }
 
 
     /**
