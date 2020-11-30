@@ -25,7 +25,7 @@ public class Tree<E> implements SimpleTree<E> {
         if (findBy(parent).isPresent()) {
             if (findBy(child).isPresent()) {
             } else {
-                findBy(parent).get().add(new Node(child));
+                root.add(new Node(child));
                 rsl = true;
             }
         }

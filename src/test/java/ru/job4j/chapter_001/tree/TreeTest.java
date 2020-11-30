@@ -32,4 +32,11 @@ public class TreeTest {
                 is(false)
         );
     }
+
+    @Test
+    public void whenDuplicateChildAddShouldFalse() {
+        Tree<Integer> tree = new Tree<>(1);
+        assertTrue(tree.add(1, 2));
+        assertFalse(tree.add(2, 2));
+    }
 }
