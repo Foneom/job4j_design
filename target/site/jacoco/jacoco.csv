@@ -1,27 +1,46 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-job4j_design,ru.job4j.chapter_001.iterator.matrix_iterator,MatrixIt,92,0,10,0,15,0,9,0,4,0
-job4j_design,ru.job4j.chapter_001.iterator.matrix_iterator,MatrixItTest,264,0,0,0,37,0,9,0,9,0
-job4j_design,ru.job4j.chapter_001.generic.simple_array,SimpleArray.new Iterator() {...},10,21,2,0,1,3,2,2,1,2
-job4j_design,ru.job4j.chapter_001.generic.simple_array,SimpleArray,0,72,0,0,0,15,0,6,0,6
-job4j_design,ru.job4j.chapter_001.list,SimpleStack,0,17,0,0,0,5,0,3,0,3
+job4j_design,ru.job4j.chapter_001.tree,SimpleTree.Node,0,29,0,2,0,8,0,5,0,4
+job4j_design,ru.job4j.chapter_001.tree,Tree,0,107,1,11,0,26,1,13,0,8
+job4j_design,ru.job4j.chapter_001.list,SimpleStack,0,36,0,2,0,8,0,5,0,4
 job4j_design,ru.job4j.chapter_001.list,LastList.new Iterator() {...},50,0,4,0,10,0,5,0,3,0
-job4j_design,ru.job4j.chapter_001.list,ForwardLinked,3,125,0,12,1,31,1,13,1,7
+job4j_design,ru.job4j.chapter_001.list,ForwardLinked,3,149,0,14,1,41,1,15,1,8
 job4j_design,ru.job4j.chapter_001.list,Link,12,0,0,0,5,0,2,0,2,0
+job4j_design,ru.job4j.chapter_001.list,SimpleQueue,0,37,1,3,0,9,1,4,0,3
 job4j_design,ru.job4j.chapter_001.list,ForwardLinked.Node,0,6,0,0,0,3,0,1,0,1
 job4j_design,ru.job4j.chapter_001.list,LinkTest,16,0,0,0,5,0,2,0,2,0
 job4j_design,ru.job4j.chapter_001.list,LastList,91,0,8,0,25,0,10,0,6,0
 job4j_design,ru.job4j.chapter_001.list,DynamicArray,0,65,0,2,0,15,0,7,0,6
 job4j_design,ru.job4j.chapter_001.list,ForwardLinked.new Iterator() {...},0,36,0,4,0,8,0,5,0,3
 job4j_design,ru.job4j.chapter_001.list,DynamicArray.new Iterator() {...},14,34,2,4,1,7,2,4,0,3
+job4j_design,ru.job4j.chapter_001.iterator.flatmap_for_iterator,FlatMap,41,39,2,8,9,9,2,7,1,3
+job4j_design,ru.job4j.chapter_002.io,Analizy,23,0,0,0,9,0,3,0,3,0
+job4j_design,ru.job4j.chapter_002.io,Dir,78,0,8,0,11,0,6,0,2,0
+job4j_design,ru.job4j.chapter_002.io,SimpleFileInput,35,0,4,0,12,0,4,0,2,0
+job4j_design,ru.job4j.chapter_002.io,Config,43,64,2,4,13,15,4,4,2,3
+job4j_design,ru.job4j.chapter_002.io,DublicatesVisitor,119,3,14,0,25,1,9,1,2,1
+job4j_design,ru.job4j.chapter_002.io,Search,37,0,0,0,7,0,4,0,4,0
+job4j_design,ru.job4j.chapter_002.io,LogFilter,76,0,2,0,19,0,6,0,5,0
+job4j_design,ru.job4j.chapter_002.io,DublicatesVisitor.FileProperty,109,0,16,0,28,0,12,0,4,0
+job4j_design,ru.job4j.chapter_002.io,SimpleFileOutput,86,0,6,0,19,0,6,0,3,0
+job4j_design,ru.job4j.chapter_002.io,SearchFiles,32,0,2,0,11,0,7,0,6,0
+job4j_design,ru.job4j.chapter_001.iterator.matrix_iterator,MatrixIt,92,0,10,0,15,0,9,0,4,0
+job4j_design,ru.job4j.chapter_001.iterator.matrix_iterator,MatrixItTest,264,0,0,0,37,0,9,0,9,0
+job4j_design,ru.job4j.chapter_001.map,MyHashMap,0,227,4,22,0,42,4,16,0,7
+job4j_design,ru.job4j.chapter_001.map,MyHashMap.SimpleMapIterator,9,86,3,9,2,14,3,6,0,3
+job4j_design,ru.job4j.chapter_001.map,UserMap,3,0,0,0,1,0,1,0,1,0
+job4j_design,ru.job4j.chapter_001.map,User,118,0,2,0,23,0,7,0,6,0
+job4j_design,ru.job4j.chapter_001.map,MyHashMap.Node,51,22,10,0,14,8,9,3,4,3
+job4j_design,ru.job4j.chapter_001.generic.simple_array,SimpleArray.new Iterator() {...},10,21,2,0,1,3,2,2,1,2
+job4j_design,ru.job4j.chapter_001.generic.simple_array,SimpleArray,15,95,5,1,4,19,3,8,0,8
 job4j_design,ru.job4j.chapter_001.generic.store.model,Role,4,0,0,0,2,0,1,0,1,0
 job4j_design,ru.job4j.chapter_001.generic.store.model,Base,0,10,0,0,0,5,0,3,0,3
 job4j_design,ru.job4j.chapter_001.generic.store.model,User,0,4,0,0,0,2,0,1,0,1
-job4j_design,ru.job4j.chapter_001.iterator.flatmap_for_iterator,FlatMap,41,39,2,8,9,9,2,7,1,3
 job4j_design,ru.job4j.chapter_001.iterator.even_numbers_iterator,EvenItTest,249,0,0,0,31,0,6,0,6,0
 job4j_design,ru.job4j.chapter_001.iterator.even_numbers_iterator,EvenIt,60,0,8,0,14,0,8,0,4,0
 job4j_design,ru.job4j.chapter_001.generic.store.data,MemStore,3,95,6,8,0,23,6,7,0,6
 job4j_design,ru.job4j.chapter_001.generic.store.data,UserStore,0,3,0,0,0,2,0,1,0,1
 job4j_design,ru.job4j.chapter_001.generic.store.data,RolStore,3,0,0,0,2,0,1,0,1,0
 job4j_design,ru.job4j,App,7,0,0,0,3,0,2,0,2,0
+job4j_design,ru.job4j.chapter_001.set,SimpleSet,17,16,2,0,5,5,2,2,1,2
 job4j_design,ru.job4j.chapter_001.iterator.what_is_iterator,ArrayIt,2,38,0,4,2,8,2,5,2,3
 job4j_design,ru.job4j.chapter_001.iterator.what_is_iterator,BackwardArrayIt,0,44,0,4,0,10,0,5,0,3

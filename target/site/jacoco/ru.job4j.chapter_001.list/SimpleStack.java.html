@@ -2,14 +2,23 @@
 
 <span class="fc" id="L3">public class SimpleStack&lt;T&gt; {</span>
 <span class="fc" id="L4">    private ForwardLinked&lt;T&gt; linked = new ForwardLinked&lt;&gt;();</span>
-    private int top;
+    private int size;
+
+
+
 
     public T pop() {
-<span class="fc" id="L8">       return linked.deleteLast();</span>
+<span class="fc" id="L11">        size--;</span>
+<span class="fc" id="L12">        return linked.deleteLast();</span>
     }
 
     public void push(T value) {
-<span class="fc" id="L12">        linked.add(value);</span>
-<span class="fc" id="L13">    }</span>
+<span class="fc" id="L16">        linked.add(value);</span>
+<span class="fc" id="L17">        size++;</span>
+<span class="fc" id="L18">    }</span>
+
+    public boolean isEmpty() {
+<span class="fc bfc" id="L21" title="All 2 branches covered.">        return (size == 0);</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

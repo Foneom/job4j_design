@@ -2,7 +2,6 @@ package ru.job4j.chapter_002.io;
 
 import java.io.IOException;
 import java.nio.file.*;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
 
 public class Search {
