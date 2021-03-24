@@ -20,7 +20,7 @@ public class ArgsName {
         ArgsName jvm = ArgsName.of(new String[]{"-out=512", "-encoding=UTF-8"});
         System.out.println(jvm.get("encoding"));
 
-        ArgsName zip = ArgsName.of(new String[]{"-out=", "-encoding=UTF-8"});
+        ArgsName zip = ArgsName.of(new String[]{"-out=512", "-encoding=UTF-8"});
         System.out.println(zip.get("encoding"));
     }
 
@@ -30,7 +30,10 @@ public class ArgsName {
 
     private void parse(String[] args) {
         for (String arg : args) {
-            String[] parts = arg.split("=", 10);
+            String[] parts = arg.split("=", 2);
+            if (parts.length != 2) {
+                throw new IllegalArgumentException("");
+            }
             String key = parts[0];
             if (key.startsWith("-")) {
                 key = key.substring(1);
