@@ -1,9 +1,9 @@
 package ru.job4j.chapter_002.io;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 public class ConsoleChat {
@@ -29,8 +29,7 @@ public class ConsoleChat {
         int randomIndex = 0;
         String line;
         try (BufferedReader br = new BufferedReader(
-                new InputStreamReader(
-                        new FileInputStream(botAns)))) {
+                new FileReader(botAns, StandardCharsets.UTF_8))) {
             while ((line = br.readLine()) != null) {
                 list.add(line);
             }
@@ -49,7 +48,7 @@ public class ConsoleChat {
      */
     public void writeDataInFile(String file) {
         try {
-            Files.write(Paths.get(file), finalList, StandardOpenOption.CREATE);
+            Files.write(Paths.get(file), finalList, StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -62,10 +61,10 @@ public class ConsoleChat {
             if (msg.equals(OUT)) {
                 System.exit(0);
             } else if (msg.equals(STOP)) {
-                do {
-                    msg = scanner.nextLine();
-                    finalList.add(msg);
-                } while (msg.equals(CONTINUE));
+                 while (!msg.equals(CONTINUE)) {
+                     msg = scanner.nextLine();
+                     finalList.add(msg);
+                 }
             } else {
                 finalList.add(msg);
                 System.out.println(readFile(botAnswers));
