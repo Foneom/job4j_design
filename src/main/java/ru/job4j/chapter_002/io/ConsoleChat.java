@@ -8,7 +8,7 @@ import java.util.*;
 
 public class ConsoleChat {
     private final String path;
-    private final String botAnswers;
+    private String botAnswers;
     private static final List<String> finalList = new ArrayList<>();
     private static final String OUT = "закончить";
     private static final String STOP = "стоп";
@@ -56,19 +56,20 @@ public class ConsoleChat {
 
     public void run() {
         String msg = "";
+        String botAnswer = readFile(botAnswers);
         do {
             msg = scanner.nextLine();
+            finalList.add(msg);
             if (msg.equals(OUT)) {
-                System.exit(0);
+                break;
             } else if (msg.equals(STOP)) {
-                 while (!msg.equals(CONTINUE)) {
-                     msg = scanner.nextLine();
-                     finalList.add(msg);
-                 }
+                while (!msg.equals(CONTINUE)) {
+                    msg = scanner.nextLine();
+                    finalList.add(msg);
+                }
             } else {
-                finalList.add(msg);
-                System.out.println(readFile(botAnswers));
-                finalList.add(readFile(botAnswers));
+                System.out.println(botAnswer);
+                finalList.add(botAnswer);
             }
             writeDataInFile(path);
         } while (true);
