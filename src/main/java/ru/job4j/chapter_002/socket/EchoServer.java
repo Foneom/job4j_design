@@ -1,4 +1,4 @@
-package ru.job4j.chapter_002.io;
+package ru.job4j.chapter_002.socket;
 
 import java.io.*;
 import java.net.ServerSocket;
