@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<student isExcellent="false" groupNumber="140" faculty="Transport">
+    <passport name="Ivan" surname="Petrov" age="19" gender="male"/>
+    <progress>
+        <progress>4</progress>
+        <progress>3</progress>
+        <progress>3</progress>
+        <progress>5</progress>
+    </progress>
+</student>
