@@ -67,7 +67,6 @@ public class Find {
         ArgsN argsN = ArgsN.of(args);
         Find find = new Find();
         find.findF(argsN.get("d"), argsN.get("o"), argsN.get("e"), argsN.get("t"));
-        System.out.println(argsN.get("o"));
 
     }
 }
