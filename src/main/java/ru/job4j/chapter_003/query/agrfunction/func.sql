@@ -35,6 +35,16 @@ insert into devices_people(device_id, people_id) values(3, 1);
 insert into devices_people(device_id, people_id) values(4, 6);
 insert into devices_people(device_id, people_id) values(5, 7);
 
-select avg(price) from devices
-having avg(price) > 5000;
+select people.name as "Имя человека",
+devices.name as "Название устройства",
+devices.price as "Цена устройства",
+avg(devices.price) as "Средняя стоимость"
+
+from people
+join devices_people
+	on people.id = devices_people.people_id
+join devices
+	on devices.id = devices_people.device_id
+group by people.name
+having avg(devices.price) > 5000;
 
