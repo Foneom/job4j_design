@@ -232,8 +232,10 @@ insert into `products`.`product`(name, type_id, expired_date, price)
 values ('молоко Домик в деревне', '4', '2021-06-01', '80.00');
 
 --сыр
-SELECT * FROM products.product
-where type_id = 1;
+SELECT p.id, p.name as 'Наименование', t.name as 'Тип' from products.product as p
+join products.type as t on p.type_id = t.id
+where  t.name like 'Сыр'
+group by p.id;
 
 --истек срок годности
 SELECT * FROM products.product
@@ -244,15 +246,19 @@ SELECT * FROM products.product
 where price = (SELECT Max(price) FROM products.product);
 
 --сыр и молоко
-SELECT * FROM products.product
-where type_id != 2 and type_id != 3;
+SELECT p.id, p.name as 'Наименование', t.name as 'Тип' from products.product as p
+join products.type as t on p.type_id = t.id
+where  t.name in ('Сыр', 'Молоко')
+group by p.id;
 
 --содержит слово мороженое
 SELECT * FROM products.product
 where name like '%м%о%р%о%ж%е%н%о%е%';
 
 --выводит для каждого типа количество продуктов к нему принадлежащих. В виде имя_типа, количество
-SELECT name, COUNT(*) FROM products.type group by name;
+SELECT  t.name as 'Тип продукта', COUNT(*) as 'Количество' FROM products.product as p
+join products.type as t on t.id = p.type_id
+group by t.name;
 
 --выводит тип продуктов, которых осталось меньше 10 штук
 SELECT type_id, count(type_id) FROM products.product
