@@ -235,7 +235,7 @@ values ('молоко Домик в деревне', '4', '2021-06-01', '80.00')
 SELECT p.id, p.name as 'Наименование', t.name as 'Тип' from products.product as p
 join products.type as t on p.type_id = t.id
 where  t.name like 'Сыр'
-group by p.id;
+
 
 --истек срок годности
 SELECT * FROM products.product
@@ -249,7 +249,7 @@ where price = (SELECT Max(price) FROM products.product);
 SELECT p.id, p.name as 'Наименование', t.name as 'Тип' from products.product as p
 join products.type as t on p.type_id = t.id
 where  t.name in ('Сыр', 'Молоко')
-group by p.id;
+
 
 --содержит слово мороженое
 SELECT * FROM products.product
